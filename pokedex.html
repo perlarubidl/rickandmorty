@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pokemon</title>
+</head>
+<body>
+    <style>
+        body{
+            background-color: rgb(255, 255, 255);
+        }
+
+        .pokeimg1{
+            position: absolute;
+        }
+
+        .pokeImg{
+            width: 205px;
+            height: 205px;
+            position:absolute;
+            top: 180px; ;
+            left: 110px;
+            mix-blend-mode: multiply;
+        }
+
+        button{
+            width: 50px;
+            height:50px;
+            background-color: white ;
+            border-color: brown;
+            border-radius: 50px;
+            position: absolute;
+            left: 62px;
+            top: 411px;
+            opacity: 20;
+
+            
+        }
+        .placeholder{
+            width: 250px;
+            height: 60px;
+            position: absolute;
+            top: 477px;
+            left: 115px;
+            font-size: 25px;
+            font-family: 'Times New Roman', Times, serif;
+            border-radius: 10px;
+            background-color: transparent;
+            text-align: center;
+            text-shadow: 1px;
+        }
+    </style>
+    <img src="pokedex2.jpg" alt="pokedex"width="800px">
+    <input type="text" placeholder="pikachu" id="pokename"
+    class="placeholder">
+    <img src="images.png" alt="pokebola" id="pokeIng" width="250px"style="position:absolute;top: 250px;left: 100px;width: 250px;height: 90px;">
+    <div id="pokename" class="pokeImg"style="left: 300px; top: 300px;
+    " class="pokeImg"></div>
+<div id="pokename" class="pokeimg" style="left: 140px; top: 350px; font-size: 15px;position: absolute;left: 490px;">pikachu</div>
+<div id="pokename" class="pokeimg" style="left: 140px; top: 350px; font-size: 15px;position: absolute;left: 600px; ">altura</div>
+<div id="pokename" class="pokeimg" style="left: 300px; top: 350px; font-size: 15px;position: absolute;left: 550px;">color</div>
+<div id="pokename" class="pokeimg" style="left: 300px; top: 380px; font-size: 15px;position: absolute;left: 490px;">fuerza</div>
+<div id="pokename" class="pokeimg" style="left: 300px; top: 380px; font-size: 15px;position: absolute;left: 600px;"></div>
+<div id="pokename" class="pokeimg" style="left: 300px; top: 380px; font-size: 15px;position: absolute;left: 550px;"></div>
+<div id="pokename" class="pokeimg" style="left: 300px; top: 300px; font-size: 15px;"></div>
+<div id="pokename" class="pokeimg" style="left: 300px; top: 300px; font-size: 15px;"></div>
+
+
+<div id="pokename" class="pokeimg" style="left: 300px; top: 300px; font-size: 15px;"></div>
+<div id="pokename" class="pokeimg" style="left: 300px; top: 300px; font-size: 15px;"></div>
+
+<button onclick="fetchpokemon()" class="button"></button>
+<div class="grafica">
+    <canvas id="micanvas"></canvas>
+</div>
+<script>
+    const fetchpokemon = ()=> {
+        const pokeNameInput = document.getElementById("pokename");
+        let pokeName = pokeNameInput.value;
+        pokeName = pokeName.toLowerCase();
+        const url = `https:\\pokeapi.co/api/v2/pokemon/${pokeName}`;
+    fetch(url).then((res)=> {
+        if(res.status !="200"){
+            console.log(res);
+            pokeImage("./pokemon-sad.gif")
+        }
+        else{
+            return res.json();
+        }
+
+    }).then((data) =>{
+        if(data) {
+             let pokeImg = data.prites.front_default;
+        pokeImage(pokeImg);
+        let name=document.getElementById('pokename')
+        name.innerHTML=`Name: ${data.forms[0].name}`;
+
+        let element1=document.getElementById('pokeHe')
+        element1.innerHTML=`Height: ${data.height}`;
+
+        let element2=document.getElementById('pokeHe')
+        element1.innerHTML=`weight: ${data.weight}`;
+
+        let element3=document.getElementById('pokeHe')
+        element1.innerHTML=`order: ${data.order}`;
+
+        let element4=document.getElementById('pokeHe')
+        element1.innerHTML=`id: ${data.id}`;
+
+        let element5=document.getElementById('pokeHe')
+        element1.innerHTML=`ability: ${data.ability}`;
+
+        let element6=document.getElementById('pokeHe')
+        element1.innerHTML=`type: ${data.type}`;
+
+        let element7=document.getElementById('pokeHe')
+        element1.innerHTML=`move 1: ${data.moves[0].move.move}`;
+
+        let element8=document.getElementById('pokeHe')
+        element1.innerHTML=`move 2: ${data.moves[0].move.move}`;
+
+        let element9=document.getElementById('pokeHe')
+        element1.innerHTML=`move 3: ${data.moves[0].move.move}`;
+
+        let element10=document.getElementById('pokeHe')
+        element1.innerHTML=`move 4: ${data.moves[0].move.move}`;
+      
+    const micanvas=document.getElementById("miCanvas").getContext("2d");
+    if(window.miCanva !=undefined)
+    window.miCanva.destroy();
+window.micanva= new Chart(micanvas,{
+    type:"bar",
+    data:{
+        labels:["HP","Attack","Defense","special-A","Special-D","speed"],
+        datasets:[
+            {
+                label:`${data.form[0].name}`,
+                backgoundColor:'rgba(54,162,235,1)',
+                data:[`${data.stats[0].base_stat}`,`${data.stats[1].base_stat}`,`${data.stats[2].base_stat}`,`${data.stats[3].base_stat}`,`${data.stats[4].base_stat}`,`${data.stats[5].base_stat}`],
+                borderColor:[
+                    'rgba(255,99,132,1)',
+                    'rgba(54,162,235,1)',
+                    'rgba(255,206,86,1)',
+                    'rgba(75,192,12,1)',
+                    'rgba(153,102,255,1)',
+                    'rgba(255,159,64,1)',
+                ],
+                backgoundColor:[
+                    'rgba(255,99,132,0.5)',
+                    'rgba(54,162,235,0.5)',
+                    'rgba(255,206,86,0.5)',
+                    'rgba(75,192,12,0.5)',
+                    'rgba(153,102,255.0.5)',
+                    'rgba(255,159,64,0.5)',
+                ]
+            }
+        ]
+    }
+
+})
+
+
+}
+    }
+)
+
+    
+    }
+</script>
+<script src="chart.js"></script>
+    
+
+
+
+</body>
+</html>
